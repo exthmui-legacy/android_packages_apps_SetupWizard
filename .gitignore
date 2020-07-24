@@ -1,1 +1,15 @@
 values-v1
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
+/build
+/captures
+/gradle
+/gradlew
+/gradlew.bat
+/system_libs
+/system_res
+/keystore.properties
+*.jks

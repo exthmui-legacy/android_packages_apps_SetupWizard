@@ -42,4 +42,7 @@ LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/permissions
 LOCAL_SRC_FILES := $(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
 
+include $(CLEAR_VARS)
+include $(LOCAL_PATH)/Studio.mk
+
 include $(call all-makefiles-under,$(LOCAL_PATH))

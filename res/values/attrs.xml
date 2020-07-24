@@ -14,6 +14,8 @@
   limitations under the License.
   -->
 <resources>
+    <attr name="colorAccent" format="color" />
+    <attr name="colorPrimary" format="color" />
     <declare-styleable name="ScrimInsetsView">
         <attr name="insetForeground" format="reference|color" />
     </declare-styleable>
