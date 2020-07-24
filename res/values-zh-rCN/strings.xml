@@ -76,4 +76,5 @@
     <string name="lockscreen_setup_title" product="default">为您的手机启用保护功能</string>
     <string name="lockscreen_setup_summary"><b>为此设备启用保护功能</b>，并要求输入 PIN 码、图案或密码才能解锁屏幕</string>
     <string name="lockscreen_setup_screen_lock_setup">设置</string>
+    <string name="welcome">欢迎使用</string>
 </resources>

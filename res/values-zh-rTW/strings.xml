@@ -75,4 +75,5 @@
     <string name="lockscreen_setup_title" product="default">保護您的手機</string>
     <string name="lockscreen_setup_summary"><b>保護這個裝置</b>，並需要輸入 PIN 碼、解鎖圖案或密碼解除螢幕鎖定</string>
     <string name="lockscreen_setup_screen_lock_setup">設定</string>
+    <string name="welcome">歡迎使用</string>
 </resources>
