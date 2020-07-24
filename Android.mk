@@ -15,6 +15,7 @@ LOCAL_PRIVATE_PLATFORM_APIS := true
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 LOCAL_STATIC_ANDROID_LIBRARIES := \
+    com.google.android.material_material \
     androidx.core_core \
     setupcompat \
     setupdesign
