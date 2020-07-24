@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2016 The CyanogenMod Project
      Copyright (C) 2017 The LineageOS Project
 
@@ -16,29 +15,54 @@
      limitations under the License.
 -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="@color/primary"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/brand_logo"
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:src="@drawable/logo"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:gravity="center"
-        android:padding="@dimen/content_margin_left"/>
+        android:padding="@dimen/content_margin"
+        android:scaleType="fitEnd"
+        android:src="@drawable/logo" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/NextStepButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_next_step_light" />
+
+        <Button
+            android:id="@+id/emergency"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/next_step"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="40dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:text="@string/emergency_call" />
+
+    </RelativeLayout>
 
     <com.google.android.setupdesign.view.NavigationBar
         android:id="@+id/navigation_bar"
         style="@style/SudNavBarTheme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/sud_navbar_height" />
+        android:layout_height="@dimen/sud_navbar_height"
+        android:visibility="gone" />
 
 </LinearLayout>

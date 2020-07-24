@@ -15,18 +15,21 @@
      limitations under the License.
 -->
 <resources>
-    <style name="Theme.Setup" parent="@android:style/Theme.Material.Light">
+    <style name="Theme.Setup" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primary</item>
-        <item name="android:colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="android:textColorLink">@color/accent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimations</item>
+        <item name="android:fitsSystemWindows">true</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="localePickerStyle">@style/LocaleWidget.Material.LocalePicker</item>
     </style>
 
@@ -113,4 +116,16 @@
     </style>
 
     <style name="NoDisplay" parent="@android:style/Theme.NoDisplay" />
+
+    <style name="NextStepButtonStyle">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:id">@+id/next_step</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_gravity">right|center</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:src">@drawable/ic_next_step</item>
+    </style>
 </resources>

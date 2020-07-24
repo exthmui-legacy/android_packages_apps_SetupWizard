@@ -36,6 +36,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import org.lineageos.setupwizard.util.PhoneMonitor;
@@ -51,7 +52,7 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
     private ProgressBar mProgressBar;
     private SparseArray<TextView> mNameViews;
     private SparseArray<ImageView> mSignalViews;
-    private SparseArray<CheckBox> mCheckBoxes;
+    private SparseArray<RadioButton> mCheckBoxes;
     private SparseArray<View> mRows;
 
     private SparseArray<SubscriptionInfo> mSubInfoRecords;
@@ -198,7 +199,7 @@ public class ChooseDataSimActivity extends BaseSetupWizardActivity {
             int slot = subInfoRecord.getSimSlotIndex();
             mNameViews.put(slot, (TextView) simRow.findViewById(R.id.sim_title));
             mSignalViews.put(slot, (ImageView) simRow.findViewById(R.id.signal));
-            mCheckBoxes.put(slot, (CheckBox) simRow.findViewById(R.id.enable_check));
+            mCheckBoxes.put(slot, (RadioButton) simRow.findViewById(R.id.enable_check));
             mRows.put(slot, simRow);
             mPageView.addView(inflater.inflate(R.layout.divider, null));
         }

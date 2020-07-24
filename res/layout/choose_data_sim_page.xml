@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2015 The CyanogenMod Project
      Copyright (C) 2017 The LineageOS Project
 
@@ -16,21 +15,23 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/primary">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary">
 
     <include layout="@layout/header_condensed" />
 
-    <FrameLayout android:id="@+id/page"
-                 android:layout_width="match_parent"
-                 android:layout_height="0dp"
-                 android:layout_weight="1">
+    <FrameLayout
+        android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <ScrollView android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fillViewport="true">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/page_view"
@@ -62,13 +63,17 @@
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:layout_gravity="top"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </FrameLayout>
 
     <com.google.android.setupdesign.view.NavigationBar
         android:id="@+id/navigation_bar"
         style="@style/SudNavBarTheme"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sud_navbar_height" />
+
+    <ImageButton
+        style="@style/NextStepButtonStyle" />
 
 </LinearLayout>

@@ -74,7 +74,7 @@ public class ScrimInsetsFrameLayout extends FrameLayout {
         if (mOnInsetsCallback != null) {
             mOnInsetsCallback.onInsetsChanged(insets);
         }
-        return true; // consume insets
+        return false; // consume insets
     }
 
     @Override

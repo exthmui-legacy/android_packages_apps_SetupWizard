@@ -22,7 +22,7 @@
 
     <path
         android:fillColor="@color/black"
-        android:fillAlpha=".3"
+        android:fillAlpha="0.3"
         android:pathData="M2 22h20V2z" />
     <path
         android:fillColor="@color/black"

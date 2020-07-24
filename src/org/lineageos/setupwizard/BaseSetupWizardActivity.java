@@ -37,18 +37,24 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +65,7 @@ import com.google.android.setupcompat.util.WizardManagerHelper;
 
 import org.lineageos.setupwizard.util.SetupWizardUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public abstract class BaseSetupWizardActivity extends Activity implements NavigationBarListener,
@@ -91,6 +98,7 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
     private boolean mIsPrimaryUser;
     private int mResultCode = 0;
     private Intent mResultData;
+    private volatile boolean mIsFinishing = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,8 +112,8 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
         if (mNavigationBar != null) {
             mNavigationBar.setNavigationBarListener(this);
             mNavigationBar.addOnLayoutChangeListener((View view,
-                    int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) -> {
+                                                      int left, int top, int right, int bottom,
+                                                      int oldLeft, int oldTop, int oldRight, int oldBottom) -> {
                 view.requestApplyInsets();
             });
             mNavigationBar.setSystemUiVisibility(mSystemUiFlags);
@@ -113,6 +121,7 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
             // undetectable times, like transitioning from a finishing activity that had a keyboard
             ViewTreeObserver viewTreeObserver = mNavigationBar.getViewTreeObserver();
             viewTreeObserver.addOnPreDrawListener(this);
+            setNavigationButton();
         }
     }
 
@@ -216,7 +225,7 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
 
     /**
      * @return The navigation bar instance in the layout, or null if the layout does not have a
-     *     navigation bar.
+     * navigation bar.
      */
     public NavigationBar getNavigationBar() {
         final View view = findViewById(R.id.navigation_bar);
@@ -225,6 +234,7 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
 
     /**
      * Sets whether system navigation bar should be hidden.
+     *
      * @param useImmersiveMode True to activate immersive mode and hide the system navigation bar
      */
     public void setUseImmersiveMode(boolean useImmersiveMode) {
@@ -243,6 +253,25 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
         }
         if (mNavigationBar != null) {
             mNavigationBar.setSystemUiVisibility(mSystemUiFlags);
+        }
+    }
+
+    /**
+     * To set navigation buttons for every activity
+     * 为各个activity设置“导航”按钮
+     */
+    private void setNavigationButton() {
+        try {
+            ImageButton nextStepButton = findViewById(R.id.next_step);
+            nextStepButton.setOnClickListener(view -> onNavigateNext());
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            ImageButton lastStepButton = findViewById(R.id.last_step);
+            lastStepButton.setOnClickListener(view -> onBackPressed());
+        } catch (NullPointerException e) {
+
         }
     }
 
@@ -501,7 +530,7 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
         } else if (transitionId == TRANSITION_ID_DEFAULT) {
             TypedArray typedArray = obtainStyledAttributes(android.R.style.Animation_Activity,
                     new int[]{android.R.attr.activityCloseEnterAnimation,
-                    android.R.attr.activityCloseExitAnimation});
+                            android.R.attr.activityCloseExitAnimation});
             overridePendingTransition(typedArray.getResourceId(0, 0),
                     typedArray.getResourceId(1, 0));
             typedArray.recycle();
@@ -600,6 +629,19 @@ public abstract class BaseSetupWizardActivity extends Activity implements Naviga
         }
         sb.append("(").append(requestCode).append(")");
         return sb.toString();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR|
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
     }
 
     protected static String getResultName(int requestCode, int resultCode) {

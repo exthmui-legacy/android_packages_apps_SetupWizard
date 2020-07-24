@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2016 The CyanogenMod Project
      Copyright (C) 2017 The LineageOS Project
 
@@ -15,45 +14,80 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<org.lineageos.setupwizard.widget.ScrimInsetsFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<org.lineageos.setupwizard.widget.ScrimInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     app:insetForeground="@android:color/transparent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/primary">
+        android:background="@color/primary"
+        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/brand_logo"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:src="@drawable/logo"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:padding="@dimen/content_margin_left"/>
+            android:paddingBottom="132dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/welcome_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="欢迎使用"
+                android:layout_marginTop="45dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="32dp" />
+
+            <ImageView
+                android:id="@+id/brand_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/content_margin"
+                android:layout_marginRight="@dimen/content_margin"
+                android:adjustViewBounds="true"
+                android:gravity="center"
+                android:src="@drawable/logo" />
+
+        </LinearLayout>
 
         <com.google.android.setupdesign.view.NavigationBar
             android:id="@+id/navigation_bar"
             style="@style/SudNavBarTheme"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/sud_navbar_height" />
+            android:layout_height="@dimen/sud_navbar_height"
+            android:visibility="gone" />
 
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="128dp"
+            android:layout_alignParentBottom="true">
 
-    <ImageView android:id="@+id/reveal"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:background="@drawable/reveal"
-               android:visibility="invisible"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                style="@style/NextStepButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentBottom="false"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_finish" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/reveal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/reveal"
+        android:visibility="invisible" />
 
 </org.lineageos.setupwizard.widget.ScrimInsetsFrameLayout>

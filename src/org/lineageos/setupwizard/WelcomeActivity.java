@@ -20,6 +20,7 @@ package org.lineageos.setupwizard;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import org.lineageos.setupwizard.util.EnableAccessibilityController;
 
@@ -41,6 +42,10 @@ public class WelcomeActivity extends BaseSetupWizardActivity {
                 EnableAccessibilityController.getInstance(getApplicationContext());
         mRootView.setOnTouchListener((v, event) ->
                 mEnableAccessibilityController.onTouchEvent(event));
+        Button button = findViewById(R.id.emergency);
+        button.setOnClickListener(view ->{
+            startEmergencyDialer();
+        });
 
     }
 

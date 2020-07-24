@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2015 The CyanogenMod Project
      Copyright (C) 2017 The LineageOS Project
 
@@ -16,32 +15,36 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/primary">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical">
 
     <include layout="@layout/header_condensed" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminateOnly="true"
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:paddingStart="0dp"
-        android:paddingEnd="0dp" />
+        android:indeterminateOnly="true"
+        android:layout_marginTop="16dp"/>
 
-    <FrameLayout android:id="@+id/page"
-                 android:layout_width="match_parent"
-                 android:layout_height="0dp"
-                 android:layout_weight="1"
-                 style="@style/PageContent"/>
+    <FrameLayout
+        android:id="@+id/page"
+        style="@style/PageContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <com.google.android.setupdesign.view.NavigationBar
         android:id="@+id/navigation_bar"
         style="@style/SudNavBarTheme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/sud_navbar_height" />
+        android:layout_height="@dimen/sud_navbar_height"
+        android:visibility="gone" />
+
+    <ImageButton
+        style="@style/NextStepButtonStyle" />
 
 </LinearLayout>

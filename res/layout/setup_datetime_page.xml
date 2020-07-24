@@ -50,7 +50,7 @@
 
                 <Spinner
                     android:id="@+id/timezone_list"
-                    android:layout_width="290dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:saveEnabled="false"/>
 
@@ -115,7 +115,11 @@
     <com.google.android.setupdesign.view.NavigationBar
         android:id="@+id/navigation_bar"
         style="@style/SudNavBarTheme"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sud_navbar_height" />
+
+    <ImageButton
+        style="@style/NextStepButtonStyle" />
 
 </LinearLayout>

@@ -40,7 +40,7 @@
         android:layout_marginLeft="@dimen/carrier_text_margin_left"
         android:maxLines="4" />
 
-    <CheckBox
+    <RadioButton
         android:id="@+id/enable_check"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

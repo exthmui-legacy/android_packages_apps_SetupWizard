@@ -18,29 +18,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/header_condensed_height"
-    android:paddingTop="48dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:paddingTop="36dp">
+
+    <ImageButton
+        android:id="@+id/last_step"
+        android:layout_marginLeft="26dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_last_step"
+        android:layout_width="28dp"
+        android:layout_height="28dp"/>
 
     <ImageView
         android:id="@+id/header_icon"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="72dp"
         android:scaleType="centerInside"
         android:visibility="gone"
+        android:paddingTop="5dp"
+        android:layout_centerHorizontal="true"
         android:contentDescription="@null" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_toEndOf="@id/header_icon"
-        android:paddingEnd="8dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_icon"
         android:typeface="monospace"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:maxLines="1"
+        android:textSize="25dp"
         android:ellipsize="end"
         style="@style/PageTitle" />
 

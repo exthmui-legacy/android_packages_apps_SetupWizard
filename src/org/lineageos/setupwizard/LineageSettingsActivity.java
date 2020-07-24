@@ -44,6 +44,8 @@ import com.google.android.setupcompat.util.WizardManagerHelper;
 
 import org.lineageos.setupwizard.R;
 
+import java.util.Locale;
+
 import lineageos.hardware.LineageHardwareManager;
 import lineageos.providers.LineageSettings;
 
@@ -94,9 +96,20 @@ public class LineageSettingsActivity extends BaseSetupWizardActivity {
                 }
             }
         };
-        ss.setSpan(clickableSpan,
-                policySummary.length() - privacy_policy.length() - 1,
-                policySummary.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Locale locale = getResources().getConfiguration().locale;
+        if (locale.getLanguage().contains("zh")){
+            ss.setSpan(clickableSpan,
+                    policySummary.length() - privacy_policy.length() - 4,
+                    policySummary.length() - 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }else if (locale.getLanguage().contains("ja")){
+            ss.setSpan(clickableSpan,
+                    policySummary.length() - privacy_policy.length() - 11,
+                    policySummary.length() - 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }else {
+            ss.setSpan(clickableSpan,
+                    policySummary.length() - privacy_policy.length() - 1,
+                    policySummary.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         TextView privacyPolicy = (TextView) findViewById(R.id.privacy_policy);
         privacyPolicy.setMovementMethod(LinkMovementMethod.getInstance());
         privacyPolicy.setText(ss);
