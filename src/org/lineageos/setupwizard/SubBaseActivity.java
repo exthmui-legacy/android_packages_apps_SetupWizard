@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2017-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,10 @@ public abstract class SubBaseActivity extends BaseSetupWizardActivity {
     private int mRequestCode;
 
     protected abstract void onStartSubactivity();
+
+    protected void onSubactivityCanceled(Intent data) {
+        // Do nothing.
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,22 +146,16 @@ public abstract class SubBaseActivity extends BaseSetupWizardActivity {
             nextAction(RESULT_ACTIVITY_NOT_FOUND);
             finish();
         } else {
-            applyBackwardTransition(getSubactivityPreviousTransition());
-            finishAction(RESULT_CANCELED, data);
+            onSubactivityCanceled(data);
         }
     }
 
     protected int getSubactivityPreviousTransition() {
-        return TRANSITION_ID_DEFAULT;
+        return TRANSITION_ID_SLIDE;
     }
 
     protected int getSubactivityNextTransition() {
-        return TRANSITION_ID_DEFAULT;
-    }
-
-    @Override
-    protected int getTransition() {
-        return TRANSITION_ID_FADE;
+        return TRANSITION_ID_SLIDE;
     }
 
     @Override

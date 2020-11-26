@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2019-2020 The Calyx Institute
+ * Copyright (C) 2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +17,11 @@
 
 package org.lineageos.setupwizard.backup;
 
+import android.app.Activity;
 import android.content.Intent;
+
+import com.google.android.setupcompat.util.WizardManagerHelper;
+
 import org.lineageos.setupwizard.R;
 import org.lineageos.setupwizard.SubBaseActivity;
 
@@ -33,6 +38,12 @@ public class RestoreIntroActivity extends SubBaseActivity {
     }
 
     @Override
+    protected void onNextPressed() {
+        Intent intent = WizardManagerHelper.getNextIntent(getIntent(), Activity.RESULT_OK);
+        nextAction(NEXT_REQUEST, intent);
+    }
+
+    @Override
     protected int getLayoutResId() {
         return R.layout.intro_restore_activity;
     }
@@ -45,11 +56,6 @@ public class RestoreIntroActivity extends SubBaseActivity {
     @Override
     protected int getIconResId() {
         return R.drawable.ic_restore;
-    }
-
-    @Override
-    protected int getSubactivityNextTransition() {
-        return TRANSITION_ID_SLIDE;
     }
 
     private void launchRestore() {
