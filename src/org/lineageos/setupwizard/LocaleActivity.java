@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
- * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2017-2018,2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-import com.android.internal.telephony.MccTable;
 import com.android.internal.telephony.TelephonyIntents;
+import com.android.internal.telephony.util.LocaleUtils;
 
 import org.lineageos.setupwizard.R;
 import org.lineageos.setupwizard.widget.LocalePicker;
@@ -104,11 +104,6 @@ public class LocaleActivity extends BaseSetupWizardActivity {
             mPendingLocaleUpdate = false;
             fetchAndUpdateSimLocale();
         }
-    }
-
-    @Override
-    protected int getTransition() {
-        return TRANSITION_ID_SLIDE;
     }
 
     @Override
@@ -218,7 +213,7 @@ public class LocaleActivity extends BaseSetupWizardActivity {
 
                 // Fetch locale for active sim's MCC
                 int mcc = activeSubs.get(0).getMcc();
-                locale = MccTable.getLocaleFromMcc(activity, mcc, null);
+                locale = LocaleUtils.getLocaleFromMcc(activity, mcc, null);
 
                 // If that fails, fall back to preferred languages reported
                 // by the sim

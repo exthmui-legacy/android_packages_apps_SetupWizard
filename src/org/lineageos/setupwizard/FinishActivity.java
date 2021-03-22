@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
- * Copyright (C) 2017-2019 The LineageOS Project
+ * Copyright (C) 2017-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,12 @@
 
 package org.lineageos.setupwizard;
 
+import static org.lineageos.setupwizard.SetupWizardApp.ACTION_SETUP_COMPLETE;
 import static org.lineageos.setupwizard.SetupWizardApp.DISABLE_NAV_KEYS;
-import static org.lineageos.setupwizard.SetupWizardApp.KEY_BUTTON_BACKLIGHT;
+import static org.lineageos.setupwizard.SetupWizardApp.ENABLE_RECOVERY_UPDATE;
 import static org.lineageos.setupwizard.SetupWizardApp.KEY_SEND_METRICS;
 import static org.lineageos.setupwizard.SetupWizardApp.LOGV;
+import static org.lineageos.setupwizard.SetupWizardApp.UPDATE_RECOVERY_PROP;
 
 import android.animation.Animator;
 import android.app.Activity;
@@ -34,6 +36,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -44,6 +47,9 @@ import com.google.android.setupcompat.util.WizardManagerHelper;
 import org.lineageos.setupwizard.util.EnableAccessibilityController;
 
 import lineageos.providers.LineageSettings;
+
+import static android.os.Binder.getCallingUserHandle;
+import static org.lineageos.setupwizard.Manifest.permission.FINISH_SETUP;
 
 public class FinishActivity extends BaseSetupWizardActivity {
 
@@ -74,11 +80,6 @@ public class FinishActivity extends BaseSetupWizardActivity {
     }
 
     @Override
-    protected int getTransition() {
-        return TRANSITION_ID_SLIDE;
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.finish_activity;
     }
@@ -86,7 +87,9 @@ public class FinishActivity extends BaseSetupWizardActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.translucent_enter, R.anim.translucent_exit);
+        if (!isResumed() || mResultCode != RESULT_CANCELED) {
+            overridePendingTransition(R.anim.translucent_enter, R.anim.translucent_exit);
+        }
     }
 
     @Override
@@ -103,6 +106,10 @@ public class FinishActivity extends BaseSetupWizardActivity {
     }
 
     private void startFinishSequence() {
+        Intent i = new Intent(ACTION_SETUP_COMPLETE);
+        i.setPackage(getPackageName());
+        sendBroadcastAsUser(i, getCallingUserHandle(), FINISH_SETUP);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         hideBackButton();
         hideNextButton();
@@ -170,6 +177,7 @@ public class FinishActivity extends BaseSetupWizardActivity {
         }
         handleEnableMetrics(mSetupWizardApp);
         handleNavKeys(mSetupWizardApp);
+        handleRecoveryUpdate(mSetupWizardApp);
         final WallpaperManager wallpaperManager =
                 WallpaperManager.getInstance(mSetupWizardApp);
         wallpaperManager.forgetLoadedWallpaper();
@@ -196,6 +204,15 @@ public class FinishActivity extends BaseSetupWizardActivity {
         }
     }
 
+    private static void handleRecoveryUpdate(SetupWizardApp setupWizardApp) {
+        if (setupWizardApp.getSettingsBundle().containsKey(ENABLE_RECOVERY_UPDATE)) {
+            boolean update = setupWizardApp.getSettingsBundle()
+                    .getBoolean(ENABLE_RECOVERY_UPDATE);
+
+            SystemProperties.set(UPDATE_RECOVERY_PROP, String.valueOf(update));
+        }
+    }
+
     private static void writeDisableNavkeysOption(Context context, boolean enabled) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -206,19 +223,6 @@ public class FinishActivity extends BaseSetupWizardActivity {
             LineageSettings.System.putIntForUser(context.getContentResolver(),
                     LineageSettings.System.FORCE_SHOW_NAVBAR, enabled ? 1 : 0,
                     UserHandle.USER_CURRENT);
-        }
-
-        /* Save/restore button timeouts to disable them in softkey mode */
-        if (enabled) {
-            LineageSettings.Secure.putInt(context.getContentResolver(),
-                    LineageSettings.Secure.BUTTON_BRIGHTNESS, 0);
-        } else {
-            int currentBrightness = LineageSettings.Secure.getInt(context.getContentResolver(),
-                    LineageSettings.Secure.BUTTON_BRIGHTNESS, 100);
-            int oldBright = prefs.getInt(KEY_BUTTON_BACKLIGHT,
-                    currentBrightness);
-            LineageSettings.Secure.putInt(context.getContentResolver(),
-                    LineageSettings.Secure.BUTTON_BRIGHTNESS, oldBright);
         }
     }
 }

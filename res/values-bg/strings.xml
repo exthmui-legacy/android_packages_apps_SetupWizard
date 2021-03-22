@@ -49,7 +49,7 @@
     <string name="enable_mobile_data_summary">Желаете ли да се използват мобилни данни по време на инсталацията? Активирането на мобилните данни може да доведе до допълнителни такси.</string>
     <string name="no">Не</string>
     <string name="yes">Да</string>
-    <string name="data_sim_name">СИМ карта<xliff:g id="sub">%d </xliff:g> - <xliff:g id="name">%s </xliff:g></string>
+    <string name="data_sim_name">СИМ карта<xliff:g id="sub">%1$d</xliff:g> - <xliff:g id="name">%2$s</xliff:g></string>
     <string name="emergency_call">Спешни повиквания</string>
     <string name="setup_services">exTHmUI функции</string>
     <string name="services_explanation" product="tablet">Тези услуги работят за да разширят възможностите на таблета. Данните ще бъдат използвани в съгласие с exTHmUI\'s в <xliff:g id="name" example="Privacy Policy">%s </xliff:g>.</string>
@@ -62,13 +62,16 @@
     <string name="setup_device_locked">Това устройство е заключено от потребителя.</string>
     <string name="setup_require_cyanogen_label"><b>Изисква паролата на акаунта</b> за да използвате устройството дори след фабрично нулиране.</string>
     <string name="setup_device_locked_instructions"><i>За да включите тази функция, изключено/включено, моля отидете на Настройки &gt; Сигурност</i></string>
-    <string name="settings_fingerprint_setup_title">Изберете резервен метод за заключване на екрана</string>
-    <string name="settings_fingerprint_setup_details">Как бихте желали да заключите вашият екран?</string>
+    <string name="settings_biometric_setup_title">Изберете резервен метод за заключване на екрана</string>
+    <string name="settings_biometric_setup_details">Как бихте желали да заключите вашият екран?</string>
     <string name="fingerprint_setup_title">Създаване на пръстов отпечатък</string>
     <string name="fingerprint_setup_summary">За да използвате сензора за пръстови отпечатъци за отключите вашият екран, ще трябва да:</string>
-    <string name="fingerprint_setup_backup_lock_method">Настройка на втори метод за отключване</string>
     <string name="fingerprint_setup_add_fingerprint">Добавете вашият пръстов отпечатък</string>
-    <string name="fingerprint_setup_screen_lock_setup">Настройка на екрана за заключване</string>
+    <string name="face_setup_title">Настройка на лицево отключване</string>
+    <string name="face_setup_summary">За да използвате лицеви данни, за отключване на екрана, ще трябва:</string>
+    <string name="face_setup_add_face">Добави лицеви данни</string>
+    <string name="biometric_setup_backup_lock_method">Настройка на втори метод за отключване</string>
+    <string name="biometric_setup_screen_lock_setup">Настройка на екрана за заключване</string>
     <string name="sim_locale_changed">Намерена %1$s СИМ карта</string>
     <string name="settings_lockscreen_setup_title">Изберете метод на заключване на екрана</string>
     <string name="settings_lockscreen_setup_details">Как бихте желали да заключите вашият екран?</string>
@@ -76,4 +79,8 @@
     <string name="lockscreen_setup_title" product="default">Защитете телефона си</string>
     <string name="lockscreen_setup_summary"><b>Защитете у-вото</b> и изисквайте ПИН код, фигура или парола за отключване на екрана</string>
     <string name="lockscreen_setup_screen_lock_setup">Конфигуриране</string>
+    <string name="intro_restore_title">Възстановяване на приложения и данни</string>
+    <string name="intro_restore_subtitle" product="tablet">Ако имате резервно копие, направено на друг таблет с LineageOS, можете да го възстановите тук.</string>
+    <string name="intro_restore_subtitle" product="default">Ако имате резервно копие, направено на друг телефон с LineageOS, можете да го възстановите тук.</string>
+    <string name="intro_restore_button">Възстановяване от архив</string>
 </resources>

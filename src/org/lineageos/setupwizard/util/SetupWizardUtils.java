@@ -37,11 +37,13 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
+import android.hardware.face.FaceManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Binder;
 import android.os.SystemProperties;
@@ -55,15 +57,17 @@ import android.util.Log;
 
 import org.lineageos.setupwizard.BluetoothSetupActivity;
 import org.lineageos.setupwizard.ChooseDataSimActivity;
-import org.lineageos.setupwizard.FingerprintActivity;
+import org.lineageos.setupwizard.BiometricActivity;
 import org.lineageos.setupwizard.MobileDataActivity;
 import org.lineageos.setupwizard.SetupWizardApp;
 import org.lineageos.setupwizard.SimMissingActivity;
+import org.lineageos.setupwizard.UpdateRecoveryActivity;
 import org.lineageos.setupwizard.WifiSetupActivity;
 import org.lineageos.setupwizard.wizardmanager.WizardManager;
 
 import org.lineageos.internal.util.PackageManagerUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +77,11 @@ public class SetupWizardUtils {
 
     private static final String GMS_PACKAGE = "com.google.android.gms";
     private static final String GMS_SUW_PACKAGE = "com.google.android.setupwizard";
+    private static final String GMS_TV_SUW_PACKAGE = "com.google.android.tungsten.setupwraith";
+    private static final String UPDATER_PACKAGE = "org.lineageos.updater";
 
+    private static final String UPDATE_RECOVERY_EXEC = "/vendor/bin/install-recovery.sh";
+    private static final String CONFIG_HIDE_RECOVERY_UPDATE = "config_hideRecoveryUpdate";
     private static final String PROP_BUILD_DATE = "ro.build.date.utc";
 
     private SetupWizardUtils(){}
@@ -114,6 +122,23 @@ public class SetupWizardUtils {
     public static boolean hasTelephony(Context context) {
         PackageManager packageManager = context.getPackageManager();
         return packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+    }
+
+    public static boolean hasRecoveryUpdater(Context context) {
+        boolean fileExists = new File(UPDATE_RECOVERY_EXEC).exists();
+        if (!fileExists) {
+            return false;
+        }
+
+        boolean featureHidden = false;
+        try {
+            PackageManager pm = context.getPackageManager();
+            Resources updaterResources = pm.getResourcesForApplication(UPDATER_PACKAGE);
+            int res = updaterResources.getIdentifier(
+                    CONFIG_HIDE_RECOVERY_UPDATE, "bool", UPDATER_PACKAGE);
+            featureHidden = updaterResources.getBoolean(res);
+        } catch (PackageManager.NameNotFoundException | Resources.NotFoundException ignored) { }
+        return !featureHidden;
     }
 
     public static boolean isMultiSimDevice(Context context) {
@@ -169,14 +194,16 @@ public class SetupWizardUtils {
     }
 
     public static boolean hasGMS(Context context) {
+        String gmsSuwPackage = hasLeanback(context) ? GMS_TV_SUW_PACKAGE : GMS_SUW_PACKAGE;
+
         if (PackageManagerUtils.isAppInstalled(context, GMS_PACKAGE) &&
-                PackageManagerUtils.isAppInstalled(context, GMS_SUW_PACKAGE)) {
+                PackageManagerUtils.isAppInstalled(context, gmsSuwPackage)) {
             PackageManager packageManager = context.getPackageManager();
             if (LOGV) {
                 Log.v(TAG, GMS_SUW_PACKAGE + " state = " +
-                        packageManager.getApplicationEnabledSetting(GMS_SUW_PACKAGE));
+                        packageManager.getApplicationEnabledSetting(gmsSuwPackage));
             }
-            return packageManager.getApplicationEnabledSetting(GMS_SUW_PACKAGE) !=
+            return packageManager.getApplicationEnabledSetting(gmsSuwPackage) !=
                     COMPONENT_ENABLED_STATE_DISABLED;
         }
         return false;
@@ -224,12 +251,27 @@ public class SetupWizardUtils {
         return packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK);
     }
 
+    public static boolean hasBiometric(Context context) {
+        return hasFingerprint(context) || hasFace(context);
+    }
+
     public static boolean hasFingerprint(Context context) {
         PackageManager packageManager = context.getPackageManager();
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
             FingerprintManager fingerprintManager = (FingerprintManager)
                     context.getSystemService(Context.FINGERPRINT_SERVICE);
             return fingerprintManager.isHardwareDetected();
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean hasFace(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)) {
+            FaceManager faceManager = (FaceManager)
+                    context.getSystemService(Context.FACE_SERVICE);
+            return faceManager.isHardwareDetected();
         } else {
             return false;
         }
@@ -243,8 +285,8 @@ public class SetupWizardUtils {
         if (!hasLeanback(context)) {
             disableComponent(context, BluetoothSetupActivity.class);
         }
-        if (!hasFingerprint(context)) {
-            disableComponent(context, FingerprintActivity.class);
+        if (!hasBiometric(context)) {
+            disableComponent(context, BiometricActivity.class);
         }
         if (!hasTelephony(context)) {
             disableComponent(context, MobileDataActivity.class);

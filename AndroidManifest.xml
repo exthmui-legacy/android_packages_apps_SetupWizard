@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2013 The CyanogenMod Project
-     Copyright (C) 2017,2019 The LineageOS Project
+     Copyright (C) 2017-2021 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
     <uses-permission android:name="android.permission.BACKUP" />
+    <uses-permission android:name="android.permission.LOCAL_MAC_ADDRESS" />
     <uses-permission android:name="lineageos.permission.FINISH_SETUP" />
     <uses-permission android:name="lineageos.permission.WRITE_SETTINGS" />
     <uses-permission android:name="lineageos.permission.WRITE_SECURE_SETTINGS" />
@@ -48,6 +49,9 @@
     <permission
         android:name="lineageos.permission.FINISH_SETUP"
         android:protectionLevel="signatureOrSystem" />
+
+    <protected-broadcast android:name="org.lineageos.setupwizard.LINEAGE_SETUP_COMPLETE"
+                         android:permission="lineageos.permission.FINISH_SETUP"/>
 
     <protected-broadcast android:name="org.lineageos.setupwizard.SETUP_FINISHED"
                          android:permission="lineageos.permission.FINISH_SETUP"/>
@@ -219,6 +223,29 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".UpdateRecoveryActivity"
+                  android:label="@string/activity_label_empty"
+                  android:excludeFromRecents="true"
+                  android:configChanges="mcc|mnc"
+                  android:immersive="true"
+                  android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="org.lineageos.setupwizard.LINEAGE_RECOVERY_UPDATE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".DeviceSpecificActivity"
+                  android:label="@string/activity_label_empty"
+                  android:excludeFromRecents="true"
+                  android:immersive="true"
+                  android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="org.lineageos.setupwizard.DEVICE_SPECIFIC"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".LineageSettingsActivity"
                   android:label="@string/activity_label_empty"
                   android:excludeFromRecents="true"
@@ -231,7 +258,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".FingerprintActivity"
+        <activity android:name=".BiometricActivity"
                   android:label="@string/activity_label_empty"
                   android:excludeFromRecents="true"
                   android:configChanges="mcc|mnc"
@@ -239,7 +266,7 @@
                   android:exported="false"
                   android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
-                <action android:name="org.lineageos.setupwizard.LINEAGE_FINGERPRINT_SETTINGS" />
+                <action android:name="org.lineageos.setupwizard.LINEAGE_BIOMETRIC_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -254,6 +281,18 @@
             <intent-filter>
                 <action android:name="org.lineageos.setupwizard.LINEAGE_LOCKSCREEN_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".backup.RestoreIntroActivity"
+                  android:label="@string/activity_label_empty"
+                  android:excludeFromRecents="true"
+                  android:configChanges="mcc|mnc"
+                  android:immersive="true"
+                  android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="org.lineageos.setupwizard.LINEAGE_RESTORE_BACKUP"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
@@ -292,6 +331,8 @@
         <receiver android:name=".PartnerReceiver">
             <intent-filter>
                 <action android:name="com.android.setupwizard.action.PARTNER_CUSTOMIZATION" />
+                <action android:name="com.google.android.tvsetup.action.PARTNER_CUSTOMIZATION" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
