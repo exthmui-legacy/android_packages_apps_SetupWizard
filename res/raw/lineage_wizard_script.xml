@@ -70,6 +70,10 @@
     </WizardAction>
 
     <WizardAction wizard:uri="intent:#Intent;action=org.lineageos.setupwizard.LINEAGE_BIOMETRIC_SETTINGS;end" id="biometric_settings">
+        <result wizard:action="nav_settings" />
+    </WizardAction>
+
+    <WizardAction wizard:uri="intent:#Intent;action=org.lineageos.setupwizard.NAV_SETTINGS;end" id="nav_settings">
         <result wizard:action="lockscreen_settings" />
     </WizardAction>
 

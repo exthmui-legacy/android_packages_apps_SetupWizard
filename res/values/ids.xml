@@ -4,5 +4,8 @@
     <item name="localepicker_input" type="id" />
     <item name="lp__increment" type="id" />
     <item name="lp__decrement" type="id" />
+    <item name="gesture_navigation" type="id" />
+    <item name="two_button_navigation" type="id" />
+    <item name="three_button_navigation" type="id" />
 
 </resources>

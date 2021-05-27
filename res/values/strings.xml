@@ -113,4 +113,12 @@
     <string name="update_recovery_description">Updates Lineage Recovery on first boot subsequent to every update.</string>
     <string name="update_recovery_warning">Recovery will be updated as soon as you finish the setup. If you wish to keep it intact, disable this feature.</string>
     <string name="update_recovery_setting">Update Lineage Recovery alongside the OS</string>
+
+    <!-- Nav Settings -->
+    <string name="setup_nav_settings">Navigation Bar</string>
+    <string name="setup_nav_applying">Applying...</string>
+    <string name="nav_gesture">Gesture navigation</string>
+    <string name="nav_two_button">2-button navigation</string>
+    <string name="nav_three_button">3-button navigation</string>
+
 </resources>

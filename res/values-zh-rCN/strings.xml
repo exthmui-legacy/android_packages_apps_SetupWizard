@@ -88,5 +88,11 @@
     <string name="update_recovery_warning">恢复程序将在您完成设置后立即更新。如果您想保持完整，请禁用此功能。</string>
     <string name="update_recovery_setting">与操作系统一起更新 exTHm 恢复</string>
     <string name="welcome">欢迎使用</string>
+    <!-- Nav Settings -->
+    <string name="setup_nav_settings">导航栏</string>
+    <string name="setup_nav_applying">应用中...</string>
+    <string name="nav_gesture">手势导航</string>
+    <string name="nav_two_button">“双按钮”导航</string>
+    <string name="nav_three_button">“三按钮”导航</string>
 
 </resources>

@@ -36,4 +36,9 @@
     <dimen name="carrier_text_margin_left">15dp</dimen>
     <dimen name="setup_line_spacing">3sp</dimen>
     <dimen name="min_locale_picker_height">100dp</dimen>
+    <dimen name="setup_nav_settings_image_height">240dp</dimen>
+    <dimen name="setup_nav_settings_radio_group_padding_left">25dp</dimen>
+    <dimen name="setup_nav_settings_radio_group_padding_right">25dp</dimen>
+    <dimen name="setup_nav_settings_radio_group_padding_top">12dp</dimen>
+    <dimen name="setup_nav_settings_radio_group_padding_bottom">12dp</dimen>
 </resources>

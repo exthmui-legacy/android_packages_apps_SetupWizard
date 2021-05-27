@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="gesture_title_array">
+        <item>@string/nav_gesture</item>
+        <item>@string/nav_two_button</item>
+        <item>@string/nav_three_button</item>
+    </string-array>
+
+</resources>
