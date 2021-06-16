@@ -96,20 +96,10 @@ public class LineageSettingsActivity extends BaseSetupWizardActivity {
                 }
             }
         };
-        Locale locale = getResources().getConfiguration().locale;
-        if (locale.getLanguage().contains("zh")){
-            ss.setSpan(clickableSpan,
-                    policySummary.length() - privacy_policy.length() - 4,
-                    policySummary.length() - 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }else if (locale.getLanguage().contains("ja")){
-            ss.setSpan(clickableSpan,
-                    policySummary.length() - privacy_policy.length() - 11,
-                    policySummary.length() - 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }else {
-            ss.setSpan(clickableSpan,
-                    policySummary.length() - privacy_policy.length() - 1,
-                    policySummary.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
+        int ppStartIndex = policySummary.indexOf(privacy_policy);
+        ss.setSpan(clickableSpan,
+                ppStartIndex, ppStartIndex + privacy_policy.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         TextView privacyPolicy = (TextView) findViewById(R.id.privacy_policy);
         privacyPolicy.setMovementMethod(LinkMovementMethod.getInstance());
         privacyPolicy.setText(ss);
